@@ -1,0 +1,5 @@
+mysql> create database student;
+Query OK, 1 row affected (0.42 sec)
+
+mysql> use student;
+Database changed 

@@ -1,0 +1,34 @@
+Faculty Login table:
+create table facultylogin(
+	username varchar(20),
+	password varchar(20));
+
+insert into facultylogin values('Prachi','prachi123');
+
+Student Login table:
+create table studentlogin(
+	rno int,
+	password varchar(20));
+insert into studentlogin values(1,'prachi123');
+insert into studentlogin values(2,'prachi');
+insert into studentlogin values(3,'prach');
+
+
+Student marks table:
+create table studentmarks(
+	rno int primary key,
+	english int,
+	maths int,
+	science int,
+	total int,
+	percentage int);
+
+Student previous marks table:
+CREATE TABLE studentprevmarks (
+    	id INT AUTO_INCREMENT PRIMARY KEY,
+    	rno INT ,
+    	engmks INT ,
+    	mathmks INT,
+    	scimks INT ,
+    	changedat DATETIME DEFAULT NULL);
+

@@ -1,0 +1,86 @@
+
+mysql> create database student;
+Query OK, 1 row affected (0.42 sec)
+
+mysql> use student;
+Database changed 
+
+
+
+create table facultylogin(username varchar(20),password varchar(20));
+ insert into facultylogin values('Prachi','prachi123');
+SQL> create table studentlogin(rno int,password varchar(20));
+
+Table created.
+
+SQL> insert into studentlogin values(1,'prachi123');
+
+1 row created.
+
+SQL> insert into studentlogin values(2,'prachi');
+
+1 row created.
+
+SQL> insert into studentlogin values(3,'prach');
+
+1 row created.
+SQL> create table studentmarks(rno int primary key,english int,maths int,science int,total int,percentage int);
+
+***
+create trigger stud_marks before INSERT on studentmarks for each row set new.total = new.english + new.maths + new.science,new.percentage =new.total * 100 / 300;
+***
+
+CREATE TABLE studentprevmarks (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    rno INT ,
+    engmks INT ,
+    mathmks INT,
+    scimks INT ,
+    changedat DATETIME DEFAULT NULL
+    );
+
+******
+CREATE TRIGGER before_marks_update 
+    BEFORE UPDATE ON studentmarks
+    FOR EACH ROW 
+ INSERT INTO studentprevmarks
+ SET rno = OLD.rno,
+ engmks= OLD.english,
+mathmks = OLD.maths,
+scimks= OLD.science,
+  changedat = NOW();
+******
+
+***create trigger updatemarks before UPDATE on studentmarks for each row set new.total = new.english + new.maths + new.science,new.percentage =new.total * 100 / 300;
+***
+
+
+CREATE PROCEDURE seeresult(
+	IN rono INT,
+    OUT english VARCHAR(255),
+OUT maths VARCHAR(255),
+OUT science VARCHAR(255)
+)
+BEGIN
+    SELECT english,maths,science 
+    FROM studentmarks
+	WHERE rno = rono;
+END$$
+
+********************************************************************************
+
+mysql> SELECT rno,CONCAT('*', UPPER(SHA1(UNHEX(SHA1(password))))) as password from studentlogin;
++------+-------------------------------------------+
+| rno  | password                                  |
++------+-------------------------------------------+
+|    1 | *FB88B6738D6DDCBCED5C6180040C055A0E586B82 |
+|    2 | *B4B3C017363E0982BF6D967ED8CB81EF53FA8CAE |
+|    3 | *D4FC8D81451FA6ED992904B9E92B70C9AA10009D |
+|    4 | *A99F5A55082E2C89127D5FB4E79CB0EBBDFFD878 |
+|    5 | *2051CCE3FC950C5C2A0B7484455F293835DE4D65 |
+|    6 | *6B62C004588435276CC98118EA7B31D26976701A |
+|    5 | *D601A3C9A184ECC55EB68ED0E56EF8FBF7937EBF |
++------+-------------------------------------------+
+7 rows in set (0.03 sec)
+
+********************************************************************************

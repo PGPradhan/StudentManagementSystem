@@ -1,0 +1,60 @@
+
+Procedure 1:
+
+use student;
+delimiter $$
+drop procedure if exists seeresult $$
+CREATE PROCEDURE seeresult(
+	IN rono INT)
+BEGIN
+    SELECT * 
+    FROM studentmarks
+	WHERE rno = rono;
+
+end $$
+delimiter ;
+
+
+Procedure 2:
+
+delimiter $$
+drop procedure if exists passorfail $$
+CREATE PROCEDURE passorfail(sid int)
+BEGIN
+DECLARE per int;
+select percentage into per from studentmarks where rno = sid;
+IF per<35 THEN select 'Fail';
+ELSEIF per<50 THEN select 'C Grade';
+ELSEIF per<70 THEN select 'B Grade';
+ELSE select 'A Grade';
+END IF;
+END$$
+delimiter ;
+
+
+Procedure 3:
+use student;
+delimiter $$
+drop procedure if exists passcount$$
+CREATE PROCEDURE passcount()
+BEGIN
+    SELECT COUNT(*) 
+FROM studentmarks
+WHERE percentage >= 40;
+end $$
+delimiter ;
+
+
+Procedure 4:
+
+
+use student;
+delimiter $$
+drop procedure if exists failcount$$
+CREATE PROCEDURE failcount()
+BEGIN
+    SELECT COUNT(*) 
+FROM studentmarks
+WHERE percentage < 40;
+end $$
+delimiter ;

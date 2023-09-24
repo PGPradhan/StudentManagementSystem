@@ -1,0 +1,27 @@
+Trigger 1:
+create trigger stud_marks 
+	before INSERT 
+	on studentmarks 
+	for each row 
+	set new.total = new.english + new.maths + new.science,
+	new.percentage =new.total * 100 / 300;
+
+Trigger 2:
+CREATE TRIGGER before_marks_update 
+    	BEFORE UPDATE ON studentmarks
+    	FOR EACH ROW 
+   	INSERT INTO studentprevmarks
+ 	SET rno = OLD.rno,
+ 	engmks= OLD.english,
+	mathmks = OLD.maths,
+	scimks= OLD.science,
+  	changedat = NOW();
+
+Trigger 3:
+create trigger updatemarks 
+	before UPDATE 
+	on studentmarks
+	for each row
+	set new.total = new.english + new.maths + new.science,
+	new.percentage =new.total * 100 / 300;
+
